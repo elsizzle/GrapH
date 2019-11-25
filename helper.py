@@ -2,6 +2,7 @@
 
 import requests
 from private import token as apikey
+# token='YOURAPIKEY'
 
 url  = 'https://api.github.com'
 head = {'Authorization': 'token {}'.format(apikey)}
