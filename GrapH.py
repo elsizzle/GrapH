@@ -22,13 +22,12 @@ def main() :
    parser.add_argument("--repos", help="Include repositories.", action='store_true')
    args = parser.parse_args()
 
-   #g.add_node(args.user)
    recurse(args.user, args.depth, args.following, args.followers, args.repos)
 
-   #nx.draw_spectral(g, with_labels=True, nodecolor='w', edge_color='b')
+   #nx.draw_spectral(g, with_labels=True, nodecolor='w', edge_color='b', font_size=12)
    #nx.draw_planar(g, with_labels=True, nodecolor='w', edge_color='b')
    #nx.draw_random(g, with_labels=True, nodecolor='w', edge_color='b')
-   #nx.draw_spring(g, with_labels=True, nodecolor='w', edge_color='b', font_size=12)
+   #nx.draw_spring(g, with_labels=True, nodecolor='w', font_size=12)
    nx.draw_circular(g, font_size=12, with_labels=True, node_color='r')
 
    plt.axis('off')
@@ -38,26 +37,24 @@ def main() :
 def recurse (cuser, cdepth, bfollowing, bfollowers, brepos) : 
 
    global g
+   following = []
+   followers = []
 
    if bfollowers : 
       followers = userFollowers(cuser)
       for i in followers : 
-         #g.add_node(i)
          g.add_edge(i, cuser)
 
    if bfollowing : 
       following = userFollowing(cuser)
       for i in following : 
-         #g.add_node(i)
          g.add_edge(cuser, i)
 
-   #if cdepth > 0 : 
-   #   for i in followers : 
-   #      cargs.user = i
-   #      cargs.depth -= 1 
-   #      recurse(i, cdepth-1)
-   #   #for i in followers : 
-   #   #   recurse(i, cdepth-1) 
+   all = following + followers
+
+   if cdepth > 0 : 
+      for i in all : 
+         recurse(i, cdepth-1, bfollowing, bfollowers, brepos)
 
 if __name__ == "__main__" : 
    main()
