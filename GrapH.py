@@ -24,21 +24,22 @@ def main() :
 
    recurse(args.user, args.depth, args.following, args.followers, args.repos)
 
-   #nx.draw_spectral(g, with_labels=True, nodecolor='w', edge_color='b', font_size=12)
+   #nx.draw_spectral(g, with_labels=True, nodecolor='w', edge_color='b', font_size=16)
    #nx.draw_planar(g, with_labels=True, nodecolor='w', edge_color='b')
    #nx.draw_random(g, with_labels=True, nodecolor='w', edge_color='b')
-   #nx.draw_spring(g, with_labels=True, nodecolor='w', font_size=12)
-   nx.draw_circular(g, font_size=12, with_labels=True, node_color='r')
+   #nx.draw_spring(g, with_labels=True, nodecolor='w', font_size=16)
+   nx.draw_circular(g, font_size=20, with_labels=True, node_color='r')
 
    plt.axis('off')
    plt.show() # display
-   print(g.degree)
+   #print(g.degree)
 
 def recurse (cuser, cdepth, bfollowing, bfollowers, brepos) : 
 
    global g
    following = []
    followers = []
+   repos     = []
 
    if bfollowers : 
       followers = userFollowers(cuser)
@@ -49,6 +50,9 @@ def recurse (cuser, cdepth, bfollowing, bfollowers, brepos) :
       following = userFollowing(cuser)
       for i in following : 
          g.add_edge(cuser, i)
+
+   if brepos : 
+      repos = userRepos(cuser) 
 
    all = following + followers
 
